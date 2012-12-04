@@ -1,0 +1,90 @@
+Name:                bart
+Version:             0.1.0.0
+Synopsis:            Get BART departure times.
+Description:
+License:             BSD3
+License-file:        LICENSE
+Author:              Paulo Tanimoto
+Maintainer:          ptanimoto@gmail.com
+Category:
+Build-type:          Simple
+Cabal-version:       >=1.8
+
+-------------------------------------------------------------------------------
+Library
+  Hs-Source-Dirs:
+    src
+
+  Exposed-Modules:
+    Bart.Departure.Types
+    Bart.Departure.Parser
+    Bart.Departure.HTTP
+    Bart.Departure.Proc
+    Bart.Departure.TH
+
+  Other-Modules:
+
+  Build-Depends:
+      base                           >=      4.0      && <      5.0
+    , transformers                   >=      0.3      && <      1.0
+    , lens                           >=      3.0      && <      4.0
+    , errors                         >=      1.3      && <      2.0
+    , data-default                   >=      0.5      && <      1.0
+    , deepseq                        >=      1.3      && <      2.0
+    , containers                     >=      0.4      && <      1.0
+    , unordered-containers           >=      0.2      && <      1.0
+    , bytestring                     >=      0.10     && <      1.0
+    , text                           >=      0.11     && <      1.0
+    , vector                         >=      0.10     && <      1.0
+    , conduit                        >=      0.5      && <      0.6
+    , http-types                     >=      0.7      && <      0.8
+    , http-conduit                   >=      1.8      && <      1.9
+    , http-conduit-browser           >=      1.7      && <      1.8
+    , xml-types                      >=      0.3      && <      0.4
+    , xml-conduit                    >=      1.0      && <      1.1
+    , html-conduit                   >=      0.1      && <      0.2
+    , network                        >=      2.4      && <      2.5
+    , cmdargs                        >=      0.10     && <      0.11
+
+  Ghc-Options:
+    -Wall
+
+-------------------------------------------------------------------------------
+Executable bart
+  Hs-Source-Dirs:
+    src
+
+  Main-is:
+    bart.hs
+
+  Other-Modules:
+    Bart.Departure.Types
+    Bart.Departure.Parser
+    Bart.Departure.HTTP
+    Bart.Departure.Proc
+    Bart.Departure.TH
+
+  Build-Depends:
+      base                           >=      4.0      && <      5.0
+    , transformers                   >=      0.3      && <      1.0
+    , lens                           >=      3.0      && <      4.0
+    , errors                         >=      1.3      && <      2.0
+    , data-default                   >=      0.5      && <      1.0
+    , deepseq                        >=      1.3      && <      2.0
+    , containers                     >=      0.4      && <      1.0
+    , unordered-containers           >=      0.2      && <      1.0
+    , bytestring                     >=      0.10     && <      1.0
+    , text                           >=      0.11     && <      1.0
+    , vector                         >=      0.10     && <      1.0
+    , conduit                        >=      0.5      && <      0.6
+    , http-types                     >=      0.7      && <      0.8
+    , http-conduit                   >=      1.8      && <      1.9
+    , http-conduit-browser           >=      1.7      && <      1.8
+    , xml-types                      >=      0.3      && <      0.4
+    , xml-conduit                    >=      1.0      && <      1.1
+    , html-conduit                   >=      0.1      && <      0.2
+    , network                        >=      2.4      && <      2.5
+    , cmdargs                        >=      0.10     && <      0.11
+
+  Ghc-Options:
+    -Wall -O2 -threaded -with-rtsopts=-N

@@ -1,0 +1,7 @@
+# Directories
+dist/
+cabal-dev/
+
+# Files
+*.o
+*.hi
