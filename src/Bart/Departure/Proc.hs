@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RecordWildCards   #-}
 {-# LANGUAGE TemplateHaskell   #-}
-{-# LANGUAGE RecordWildCards    #-}
 
 -------------------------------------------------------------------------------
 -- |
@@ -20,30 +20,31 @@ module Bart.Departure.Proc
 -- Imports
 -------------------------------------------------------------------------------
 
+import           Bart.Departure.HTTP
 import           Bart.Departure.Parser
 import           Bart.Departure.Types
-import           Bart.Departure.HTTP
 
-import           Control.Monad                (when)
-import           Control.Monad.Trans.Class    (MonadTrans (lift))
-import           Control.Monad.IO.Class       (MonadIO (liftIO))
+import           Control.Monad             (when)
+import           Control.Monad.IO.Class    (MonadIO (liftIO))
+import           Control.Monad.Trans.Class (MonadTrans (lift))
 
-import           Control.Lens                 hiding (left)
+import           Control.Lens              hiding (left)
 
 import           Control.Error
 
-import           Data.Default                 (Default (..))
+import           Data.Default              (Default (..))
 
-import           Data.Conduit                 (Conduit, Pipe, ResourceT, Sink,
-                                               Source, ($$), ($=), (=$))
-import qualified Data.Conduit                 as C
+import           Data.Conduit              (Conduit, Pipe, ResourceT, Sink,
+                                            Source, ($$), ($=), (=$))
+import qualified Data.Conduit              as C
 
-import           Data.Text                    (Text)
-import qualified Data.Text                    as T
-import qualified Data.Text.IO                 as T
+import           Data.Text                 (Text)
+import qualified Data.Text                 as T
+import qualified Data.Text.IO              as T
 
-import qualified Network.HTTP.Conduit         as H
+import qualified Network.HTTP.Conduit      as H
 
+import           System.Exit               (exitFailure)
 
 -------------------------------------------------------------------------------
 -- Processing
@@ -77,7 +78,7 @@ bart Departure {..} = do
               ^. stationEtdsL
   -- Display the results
   case res of
-    Left msg -> errLn msg
+    Left msg -> err msg
     Right xs -> mapM_ (T.putStrLn . formatResult) xs
 
   where
@@ -85,3 +86,7 @@ bart Departure {..} = do
     & resDestL  .~ etdAbbr
     & resColorL .~ (headDef def etdEsts ^. estColorL)
     & resMinsL  .~ (map estMinutes etdEsts)
+
+  err msg = do
+    errLn msg
+    exitFailure
